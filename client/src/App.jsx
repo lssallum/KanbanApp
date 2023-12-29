@@ -1,10 +1,19 @@
+import CssBaseLine from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+
 
 function App() {
+  const theme = createTheme({
+    palette: { mode: "dark" },
+  });
   return (
-    <div>
-      <h1>Kanban APP</h1>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseLine />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
