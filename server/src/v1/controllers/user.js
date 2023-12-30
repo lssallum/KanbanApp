@@ -2,24 +2,29 @@ const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const jsonwebtoken = require("jsonwebtoken");
 
-exports.register = async (req,res) => {
-    const { password } = req.body
+exports.register = async (req, res) => {
+    const { password } = req.body;
+    
     try {
         req.body.password = CryptoJS.AES.encrypt(
             password,
             process.env.PASSWORD_SECRET_KEY,
-        )
-        const user = await User.create(req.body)
+        ).toString();
+
+        const user = await User.create(req.body);
+
         const token = jsonwebtoken.sign(
             { id: user._id },
             process.env.TOKEN_SECRET_KEY,
-            { expiresIn: '24h'}
-        )
-        res.status(201).json({ user, token })
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({ user: { username: user.username, email: user.email }, token });
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json({ error: "Erro ao registrar usuário. Por favor, tente novamente." });
+        console.error(err);
     }
-}
+};
 
 exports.login = async(req, res) => {
     const { username, password } = req.body;
