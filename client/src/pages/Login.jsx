@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const Login = () => {
@@ -16,7 +17,7 @@ const Login = () => {
           required
           fullWidth
           id="username"
-          label="username"
+          label="Usuário"
           name="username"
           disabled={loading}
         />
@@ -25,10 +26,11 @@ const Login = () => {
           required
           fullWidth
           id="password"
-          label="password"
+          label="Senha"
           name="password"
           type="password"
           disabled={loading}
+          
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
@@ -38,9 +40,12 @@ const Login = () => {
           fullWidth
           loading={loading}
         >
-          Login
+          Criar conta
         </LoadingButton>
       </Box>
+        <Button component={Link} to="/signup" sx={{ textTransform: "none" }}>
+          Não tem uma conta? Cadastre-se
+        </Button>
     </>
   );
 };
